@@ -1,0 +1,16 @@
+Below is the list of all the packages that are required to be installed before you run the app.
+
+-- This list will be updated as the project proceeds in development.
+
+* Common
+
+* Twitter
+pip install tweepy
+pip install BeautifulSoup
+
+
+
+* Contributers
+Risham Chokshi
+Saurabh Deochake
+
