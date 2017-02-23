@@ -12,10 +12,10 @@ import __future__
 #import logging
 import tweepy
 
-cuskey = "zu6edlBVqpxIF0Za4MRLT8afW"
-cussecret = "XAAT0J0LUOP63R2c5Qc1yjsAqECJVevdU8GWO6bwqLHT9es7qc"
-token = "584967292-DIgA6zzVW13BlfQ5RjMlKQhmXBfFPTDfAQy8T9Gk"
-secret = "6LDKv8asgstYJyHdVCJuQ6SpW4lfWyl7KW0HWuuZ43Vb0"
+cuskey = "#####"
+cussecret = "#####"
+token = "#####"
+secret = "#####"
 
 """
 Author: Saurabh Deochake (saurabh.d04@gmail.com)
