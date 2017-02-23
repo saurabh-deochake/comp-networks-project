@@ -9,6 +9,7 @@ Below is the list of all the packages that are required to be installed before y
 pip install tweepy
 pip install BeautifulSoup
 pip install geocoder
+pip install configparser
 
 
 
