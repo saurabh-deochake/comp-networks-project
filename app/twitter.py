@@ -5,18 +5,14 @@ from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from sys import version_info
 import geocoder
-#from bs4 import BeautifulSoup
-import os
+from ConfigParser import SafeConfigParser
 import time
 import __future__
 #import logging
 import tweepy
 
-cuskey = "#####"
-cussecret = "#####"
-token = "#####"
-secret = "#####"
 
+CONFIG_FILE = "/etc/api_config"
 """
 Author: Saurabh Deochake (saurabh.d04@gmail.com)
 Note: Before you run this script, please get your Consumer Key, Consumer Secret,
@@ -42,10 +38,14 @@ class Twitter_API:
 	def authenticate(self):
 			
 		print "Fetching authentication data..."
-		ckey = cuskey
-		csecret = cussecret
-		atoken = token
-		asecret = secret
+		parser = SafeConfigParser()
+		parser.read(CONFIG_FILE)
+		
+		ckey = parser.get('twitter','ckey')
+		csecret = parser.get('twitter','csecret')
+		atoken = parser.get('twitter','atoken')
+		asecret = parser.get('twitter','asecret')
+
 		
 		return ckey,csecret,atoken, asecret
 	
