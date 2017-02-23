@@ -4,6 +4,7 @@ from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from sys import version_info
+import geocoder
 #from bs4 import BeautifulSoup
 import os
 import time
@@ -32,9 +33,10 @@ class Twitter_API:
 	def call_api(self, topic):
 		print "\n\n\n***** WELCOME TO Evently Friends *****"  
 		api = self.get_api()
-		query = raw_input("\n\nEnter the location:") 
+		query = raw_input("\n\nEnter the location:")
+		g = geocoder.google(query)
 		twitterStream = Stream(auth, Messenger())
-		twitterStream.filter(track=[query])  #Track tweets with location
+		twitterStream.filter(locations=g.geojson['bbox'])  #Track tweets with location
 			
 		
 	def authenticate(self):
