@@ -1,4 +1,5 @@
-Below is the list of all the packages that are required to be installed before you run the app.
+Below is the list of all the packages that are required to be installed before you run the app. 
+(You may want to "sudo" it)
 
 -- This list will be updated as the project proceeds in development.
 
@@ -7,6 +8,7 @@ Below is the list of all the packages that are required to be installed before y
 * Twitter
 pip install tweepy
 pip install BeautifulSoup
+pip install geocoder
 
 
 
