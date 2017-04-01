@@ -56,7 +56,7 @@
                             <a class="page-scroll" href="#home">Home</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#portfolio">Events</a>
+                            <a id="event_tab" class="page-scroll" href="#portfolio" style="display:none;">Events</a>
                         </li>
                         <li>
                         <a class="page-scroll" href="#about">About Us</a>
@@ -84,7 +84,7 @@
                         <div class="intro-heading">Find your friends around you!</div>
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-3">
-                                <div class="input-group">
+                                <div class="input-group" id="search">
                                     <input type="text" class="form-control" placeholder="ENTER LOCATION..." style="height: 36px; min-width: 223px;" />
                                     <a href="#portfolio" class="page-scroll btn btn-xl input-group-addon">Search</a>           
                                 </div>
@@ -98,7 +98,7 @@
         <div>
             <!-- MOST USEFUL SECTION, YOU CAN HAVE ALL THE EVENTS HERE -->
             <!-- Portfolio Grid Section -->
-            <section id="portfolio" class="bg-light-gray">
+            <section id="portfolio" class="bg-light-gray" style="display:none;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-center">
@@ -450,6 +450,8 @@
                 <!-- Theme JavaScript -->
                 <script src="js/agency.min.js"></script>
 
+                <!-- Search.html events-->
+                <script src="js/events.js"></script>
             </body>
 
             </html>
