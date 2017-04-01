@@ -13,7 +13,7 @@
     		$("#portfolio h4.section-subheading").text($("#search > input").val());
     		$("#event_tab").css("display","block");
     		$("#portfolio").css("display","block");
-    		$('#search > a').click();
+    		$('#event_tab').click();
     		//click on the function below, so you can get the information
     		//loading
 
