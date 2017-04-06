@@ -177,3 +177,9 @@ textarea {
   margin-top: -20px;
   text-align: right;
 }
+
+#heatmap {
+    min-width: 300px;
+    max-width: 600px;
+    margin: 0 auto;
+}

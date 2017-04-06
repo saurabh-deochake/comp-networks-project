@@ -14,10 +14,60 @@
     		$("#portfolio h4.section-subheading").text(location);
     		$("#event_tab").css("display","block");
     		$("#portfolio").css("display","block");
+            $("#popularity").css("display","block");
+
     		$('#event_tab').click();
     		//click on the function below, so you can get the information
     		//loading
-    		event_friends(location);
+    		
+            //heatmap
+            Highcharts.chart('heatmap', {
+                chart: {
+                    backgroundColor: "#EEE"
+                },
+                colorAxis: {
+                    minColor: '#FFFFFF',
+                    maxColor: Highcharts.getOptions().colors[8]
+                },
+                series: [{
+                    type: 'treemap',
+                    layoutAlgorithm: 'squarified',
+                    data: [{
+                        name: 'A',
+                        value: 6,
+                        colorValue: 1
+                    }, {
+                        name: 'B',
+                        value: 6,
+                        colorValue: 2
+                    }, {
+                        name: 'C',
+                        value: 4,
+                        colorValue: 3
+                    }, {
+                        name: 'D',
+                        value: 3,
+                        colorValue: 4
+                    }, {
+                        name: 'E',
+                        value: 2,
+                        colorValue: 5
+                    }, {
+                        name: 'F',
+                        value: 2,
+                        colorValue: 6
+                    }, {
+                        name: 'G',
+                        value: 1,
+                        colorValue: 7
+                    }]
+                }],
+                title: {
+                    text: ''
+                }
+            });
+
+            event_friends(location);
     		other_event(location);
     	}	
     });
@@ -62,4 +112,8 @@
     	var event_end = "Sunday, June 1 12:00PM";
     	$('#portfolioModal2 .modal-body>div.row').append('<div class="col-md-4 col-sm-6 col-lg-4"><div class="panel panel-default"> <div class="panel-heading">'+event_name+'</div> <div class="panel-body"><strong>Location</strong>: '+event_address+' <br><strong>Start Time</strong>: '+event_start+'<br><strong>End Time</strong>: '+event_end+'</div></div></div>');
     };
+
+
+    
 })(jQuery); // End of use strict
+
