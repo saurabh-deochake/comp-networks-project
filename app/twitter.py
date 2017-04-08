@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+###########################################
+# This file only handles Twitter API. Get #
+# the tweets about an event in geo-tagged #
+# tweets.                                 #
+#                                         #
+# Author: Saurabh Deochake                #
+###########################################
+
+
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -30,6 +39,7 @@ class Twitter_API:
 		print "\n\n\n***** WELCOME TO Evently Friends *****"  
 		api = self.get_api()
 		query = raw_input("\n\nEnter the location:")
+		event = raw_input("\nEnter the event name:")
 		g = geocoder.google(query)
 		twitterStream = Stream(auth, Messenger())
 		twitterStream.filter(locations=g.geojson['bbox'])  #Track tweets with location
