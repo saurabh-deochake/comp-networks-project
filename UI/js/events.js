@@ -1,6 +1,17 @@
 (function($) {
     "use strict"; // Start of use strict
-
+    //login 
+    var users = [{
+        'Name':'Risham',
+        'instagram': 'risham33',
+        'facebook': 'sweetrishrocks@yahoo.com',
+        'twitter': 'risham33'
+    }, {
+        'Name':'Saurabh',
+        'instagram': 'saurabh.d04',
+        'facebook': 'saurabh.deochake@yahoo.com',
+        'twitter': 'saurabh.d04'
+    }];
     /*
 		This is function for whatever is entered in the text box,
 		it will spin out information about that location
