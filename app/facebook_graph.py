@@ -30,7 +30,7 @@ class FacebookGraph:
 		return USER_TOKEN
 
 	def get_data(self, data_request):
-		print json.dumps(data_request, indent=1)
+		return json.dumps(data_request, indent=1)
 
 	def get_current_time(self):
 		return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
@@ -43,21 +43,15 @@ if __name__ == '__main__':
 	ACCESS_TOKEN = fb.fetch_token()
 	fb_call = fb.call_api(ACCESS_TOKEN)
 
-#g = facebook.GraphAPI(ACCESS_TOKEN)
-
 	currentTime = fb.get_current_time()
 
-	print '---------------'
-	print 'Events'
-	print '---------------'
-	data =fb_call.request("search",{ 'q' : 'New York', 'type' : 'event',  'limit' : 5, 'since_date'  :   'currentTime'}) #'limit' ,before since_date
-	fb.get_data(data)
+	data =fb_call.request("search",{ 'q' : 'Miami', 'type' : 'event', 'since_date'  :   'currentTime'}) #'limit' ,before since_date
 	
-	#print api_data
+	# fb.get_data already returns us output in json format
+	info = json.loads(fb.get_data(data))
 
-	"""with open(api_data) as data_file:
-		info = json.load(data_file)
-		
-	print info["data"][0][id]"""
-
-
+	print info["data"][0]["id"]
+	# Now we have to get 
+	# 1. All Event IDs
+	# 2. Start and End dates
+	# 3. people attending events for all event IDs
