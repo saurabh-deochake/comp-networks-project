@@ -17,9 +17,6 @@ from ConfigParser import SafeConfigParser
 
 CONFIG_FILE = "/etc/api_config"
 
-ACCESS_TOKEN = 'EAAFWO0sUZCjABAGqo5GUg5ybiWqN1yclbk1sX6UZARYLARmgrFWlYteaKsM4GCifOeeM8Dd6aVPNV4UlA1iZCFwC2R1O3dtSRD6D3LWaudZBaV77ovpRorSZAoqrsDhUStZAa5cnpIboPcqwXJ3NUUKnaSVwqxv6KrKCYVTZClub7w1ZALLxD5MsJg6vK2ljlygZD'
-
-#'376287639436848|1En1eFeWVQtThrRZ-gXu5zWpNHU'
 
 class FacebookGraph:
 
@@ -38,6 +35,9 @@ class FacebookGraph:
 	def get_current_time(self):
 		return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
+	#def __unicode__(self):
+	#	return unicode(self.some_field) or u''
+
 if __name__ == '__main__':
 	fb = FacebookGraph()
 	ACCESS_TOKEN = fb.fetch_token()
@@ -50,5 +50,14 @@ if __name__ == '__main__':
 	print '---------------'
 	print 'Events'
 	print '---------------'
-	data =fb_call.request("search",{ 'q' : 'New Brunswick, NJ', 'type' : 'event', 'limit' : 5, 'since_date'  :   'currentTime'})
+	data =fb_call.request("search",{ 'q' : 'New York', 'type' : 'event',  'limit' : 5, 'since_date'  :   'currentTime'}) #'limit' ,before since_date
 	fb.get_data(data)
+	
+	#print api_data
+
+	"""with open(api_data) as data_file:
+		info = json.load(data_file)
+		
+	print info["data"][0][id]"""
+
+
