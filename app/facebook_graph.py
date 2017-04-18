@@ -12,10 +12,12 @@
 import facebook
 import json
 import datetime
+import requests
 from facebook import GraphAPI # pip install facebook-sdk
 from ConfigParser import SafeConfigParser
 
 CONFIG_FILE = "/etc/api_config"
+EVENT_LIMIT = 10000
 
 
 class FacebookGraph:
@@ -44,14 +46,22 @@ if __name__ == '__main__':
 	fb_call = fb.call_api(ACCESS_TOKEN)
 
 	currentTime = fb.get_current_time()
+	ids = []
 
-	data =fb_call.request("search",{ 'q' : 'Miami', 'type' : 'event', 'since_date'  :   'currentTime'}) #'limit' ,before since_date
+	data =fb_call.request("search",{ 'q' : 'Chicago', 'type' : 'event', 'limit':EVENT_LIMIT, 'since_date'  :   'currentTime'}) #'limit' ,before since_date
 	
 	# fb.get_data already returns us output in json format
 	info = json.loads(fb.get_data(data))
+	
+	#print info
+	for i in info["data"]:
+		ids.append(i["id"])
 
-	print info["data"][0]["id"]
+	#print info["paging"]["next"]
+	print set(ids)
+	print len(ids)
+	
 	# Now we have to get 
 	# 1. All Event IDs
 	# 2. Start and End dates
-	# 3. people attending events for all event IDs
+	# 3. people attending events for all event IDs"""
