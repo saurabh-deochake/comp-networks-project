@@ -61,8 +61,10 @@ if __name__ == '__main__':
 	fb_call = fb.call_api(ACCESS_TOKEN)
 
 	currentTime = fb.get_current_time()
-	ids = []
+	event_ids = []
 	events = {}
+	events_attending = {}
+	events_name = []
 	events_info = []
 	data =fb_call.request("search",{ 'q' : LOCATION, 'type' : 'event', 'limit':EVENT_LIMIT, 'since_date'  :   'currentTime'}) #'limit' ,before since_date
 	
@@ -74,22 +76,35 @@ if __name__ == '__main__':
 
 	#print events
 	# ------------_ DO IT FOR ALL IDS _------------------
-	id = events["data"][0]["id"]
+	for event in events["data"]:
+		event_ids.append(event["id"])
 
+
+	#print event_ids
 	#print fb_call.get_object(id, fields=[])
 	#print id
-	connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
-	#print connections
 
-	for name in connections["data"]:
-		print name["id"]
-		#pass
+	for id in event_ids:
+		connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
+		events_name = []
+		for name in connections["data"]:
+			#print name["name"]
+			events_name.append(name["name"])		
+		events_attending[id] = events_name
+		#print events_name
+	print "______________________________________________________"
+	print events_attending
+		
+	
 
 	#print fb_call.get_object(id="me", fields=[])
-	#id = 10203154386536494
+	id = 10203154386536494
 	#user = fb_call.get_object("me")
 	#print user
-	#print fb_call.get_connections(user["id"],"friends",id)
+	#print fb_call.get_connections(id,"taggable_friends",limit=ATTENDING_LIMIT)
+
+
+
 	#print me["data"]
 	# Now we have to get 
 	# 1. All Event IDs
