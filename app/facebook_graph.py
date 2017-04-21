@@ -66,6 +66,7 @@ if __name__ == '__main__':
 	events_attending = {}
 	events_name = []
 	events_info = []
+	friends = {}
 	data =fb_call.request("search",{ 'q' : LOCATION, 'type' : 'event', 'limit':EVENT_LIMIT, 'since_date'  :   'currentTime'}) #'limit' ,before since_date
 	
 	# fb.get_data already returns us output in json format
@@ -83,7 +84,14 @@ if __name__ == '__main__':
 	#print event_ids
 	#print fb_call.get_object(id, fields=[])
 	#print id
-
+	#print fb_call.get_object(id="me", fields=[])
+	#id = 10203154386536494
+	#user = fb_call.get_object("me")
+	#print user
+	taggable = fb_call.get_connections(SELF_ID,"taggable_friends",limit=ATTENDING_LIMIT)
+	for dictionary in taggable["data"]:
+		friends[dictionary["name"]] = dictionary["picture"]["data"]["url"]
+		
 	for id in event_ids:
 		connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
 		events_name = []
@@ -93,12 +101,18 @@ if __name__ == '__main__':
 		events_attending[id] = events_name
 		#print events_name
 	print "______________________________________________________"
-	print events_attending
-		
-	
-
+	#print events_attending
+	flag = 0
+	for key in events_attending:
+		for name in events_attending[key]:
+			if name in friends:
+				flag += 1
+				if flag == 1:
+					print "Friends attending \""+fb_call.get_object(key)["name"]+"\":"	
+				print name + " Picture: "+friends[name]
+				
 	#print fb_call.get_object(id="me", fields=[])
-	id = 10203154386536494
+	#id = 10203154386536494
 	#user = fb_call.get_object("me")
 	#print user
 	#print fb_call.get_connections(id,"taggable_friends",limit=ATTENDING_LIMIT)
@@ -109,4 +123,4 @@ if __name__ == '__main__':
 	# Now we have to get 
 	# 1. All Event IDs
 	# 2. Start and End dates
-	# 3. people attending events for all event IDs"""
+	# 3. people attending events for all event IDs
