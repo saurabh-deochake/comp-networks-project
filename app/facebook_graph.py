@@ -19,7 +19,7 @@ from ConfigParser import SafeConfigParser
 CONFIG_FILE = "/etc/api_config"
 EVENT_LIMIT = 10000
 ATTENDING_LIMIT = 100000000
-LOCATION = "Prudential Center"
+LOCATION = "New Brunswick"
 SELF_ID = "10203154386536494"
 
 class FacebookGraph:
@@ -51,9 +51,39 @@ class FacebookGraph:
 		events = {"data": events_info}
 		return json.dumps(events)
 	
+	def find_friends_attending(self, events_attending, friends):
+		flag = 0
+		#print events_attending
+		for key in events_attending:
+			#print key
+			for name in events_attending[key]:
+				if name in friends:
+					flag += 1
+					if flag == 1:
+						print "Friends attending \""+fb_call.get_object(key)["name"]+"\" at "+fb_call.get_object(key)["place"]["name"]+":"	
+						print "inside here"
+					print name + " Picture: "+friends[name]
 
-	#def __unicode__(self):
-	#	return unicode(self.some_field) or u''
+	def get_taggable_friends(self):
+		taggable = fb_call.get_connections(SELF_ID,"taggable_friends",limit=ATTENDING_LIMIT)
+		for dictionary in taggable["data"]:
+			friends[dictionary["name"]] = dictionary["picture"]["data"]["url"]
+		return friends
+
+	def get_event_attendance(self, event_ids):
+		for id in event_ids:
+			#print id
+			connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
+			events_name = []
+			for name in connections["data"]:
+				#print name["name"]
+				events_name.append(name["name"])		
+				events_attending[id] = events_name
+
+		return events_attending
+
+		
+	
 
 if __name__ == '__main__':
 	fb = FacebookGraph()
@@ -73,54 +103,15 @@ if __name__ == '__main__':
 	info = json.loads(fb.get_data(data))
 	
 	events = json.loads(fb.get_event_json(info))
-	#print len(fb.get_event_ids(ids, info))
-
-	#print events
-	# ------------_ DO IT FOR ALL IDS _------------------
+	
 	for event in events["data"]:
 		event_ids.append(event["id"])
-
-
-	#print event_ids
-	#print fb_call.get_object(id, fields=[])
-	#print id
-	#print fb_call.get_object(id="me", fields=[])
-	#id = 10203154386536494
-	#user = fb_call.get_object("me")
-	#print user
-	taggable = fb_call.get_connections(SELF_ID,"taggable_friends",limit=ATTENDING_LIMIT)
-	for dictionary in taggable["data"]:
-		friends[dictionary["name"]] = dictionary["picture"]["data"]["url"]
-		
-	for id in event_ids:
-		connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
-		events_name = []
-		for name in connections["data"]:
-			#print name["name"]
-			events_name.append(name["name"])		
-		events_attending[id] = events_name
-		#print events_name
+	
+	friends = fb.get_taggable_friends()	
+	
 	print "______________________________________________________"
-	#print events_attending
-	flag = 0
-	for key in events_attending:
-		for name in events_attending[key]:
-			if name in friends:
-				flag += 1
-				if flag == 1:
-					print "Friends attending \""+fb_call.get_object(key)["name"]+"\":"	
-				print name + " Picture: "+friends[name]
+	print event_ids
+	events_attending = fb.get_event_attendance(event_ids)
+	
+	fb.find_friends_attending(events_attending, friends)
 				
-	#print fb_call.get_object(id="me", fields=[])
-	#id = 10203154386536494
-	#user = fb_call.get_object("me")
-	#print user
-	#print fb_call.get_connections(id,"taggable_friends",limit=ATTENDING_LIMIT)
-
-
-
-	#print me["data"]
-	# Now we have to get 
-	# 1. All Event IDs
-	# 2. Start and End dates
-	# 3. people attending events for all event IDs

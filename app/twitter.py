@@ -19,6 +19,7 @@ import time
 import __future__
 #import logging
 import tweepy
+from facebook_graph import LOCATION,events
 
 
 CONFIG_FILE = "/etc/api_config"
@@ -38,9 +39,9 @@ class Twitter_API:
 	def call_api(self, topic):
 		print "\n\n\n***** WELCOME TO Evently Friends *****"  
 		api = self.get_api()
-		query = raw_input("\n\nEnter the location:")
+		#query = raw_input("\n\nEnter the location:")
 		event = raw_input("\nEnter the event name:")
-		g = geocoder.google(query)
+		g = geocoder.google(LOCATION)
 		twitterStream = Stream(auth, Messenger())
 		twitterStream.filter(locations=g.geojson['bbox'])  #Track tweets with location
 			
@@ -101,6 +102,8 @@ if __name__ == '__main__':
 	auth.set_access_token(atoken, asecret)
 	
 	print "Successfully authenticated.."
+	print events
 	
-	
-tObj.call_api(None)
+#tObj.call_api(None)
+
+	#print LOCATION
