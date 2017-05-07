@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Evently Friends</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <!-- Theme CSS -->
+    <link href="css/agency.min.css" rel="stylesheet">
+    <link href="css/hs.css" rel="stylesheet">
+    </head>
+
+    <body id="page-top" class="index">
+
+        <!-- Navigation -->
+        <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top">Evently Friends</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#home">Home</a>
+                        </li>
+                        <li>
+                            <a id="event_tab" class="page-scroll" href="#portfolio" style="display:none;">Events</a>
+                        </li>
+                        <li>
+                        <a class="page-scroll" href="#about">About Us</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#team">Team</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <!-- Header -->
+        <header>
+
+            <div class="container">
+                <div class="intro-text">
+                    <section id="home">
+                        <div class="intro-lead-in" style="color: #fec503;">Welcome To Evently Friends!</div>
+                        <div class="intro-heading">Find your friends around you!</div>
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="input-group" id="search">
+                                    <input type="text" class="form-control" placeholder="ENTER LOCATION..." style="height: 36px; min-width: 223px;" />
+                                    <a href="#portfolio" class="page-scroll btn btn-xl input-group-addon">Search</a>           
+                                </div>
+                            </div>  
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </header>
+        <div>
+            <!-- MOST USEFUL SECTION, YOU CAN HAVE ALL THE EVENTS HERE -->
+            <!-- Portfolio Grid Section -->
+            <section id="portfolio" class="bg-light-gray" style="display:none;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2 class="section-heading">Events Near</h2>
+                            <h4 class="section-subheading text-muted"> New Brunswick, NJ </h4>
+                            <h3 class="section-subheading text-muted">Click on the event to explore who is attending it</h3>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-6 portfolio-item">
+                            <a href="#portfolioModal1" class="portfolio-link" data-toggle="modal">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content">
+                                        <i class="fa fa-plus fa-3x"></i>
+                                    </div>
+                                </div>
+                                <img src="img/portfolio/roundicons.png" class="img-responsive" alt="">
+                            </a>
+                            <div class="portfolio-caption">
+                                <h4>Socializing Events</h4>
+                                <p class="text-muted">Explore events that your friends are attending</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-lg-6 portfolio-item">
+                            <a href="#portfolioModal2" class="portfolio-link" data-toggle="modal">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content">
+                                        <!-- Change to it-->
+                                        <i class="fa fa-plus fa-3x"></i>
+                                    </div>
+                                </div>
+                                <img src="img/portfolio/golden.png" class="img-responsive" alt="">
+                            </a>
+                            <div class="portfolio-caption">
+                                <h4>Other Events</h4>
+                                <p class="text-muted">List of events around you</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            <!--HeapMap-->
+            <section id="popularity" class="bg-light-gray" style="display:none;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2 class="section-heading">Popularity Map</h2>
+                            <h3 class="section-subheading text-muted">HeatMap based on Event popularity on social Media</h3>
+                            <div id="heatmap"></div>
+                        </div>
+                </div>
+            </section>
+            <!-- About Section -->
+            <section id="about" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2 class="section-heading">About Us</h2>
+                            <h3 class="section-subheading text-muted">Our idea originated and evolved in Computer Network course in Rutgers University</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <ul class="timeline">
+                                <li>
+                                    <div class="timeline-image">
+                                        <img class="img-circle img-responsive" src="img/about/SM.jpg" alt="">
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4>February 2017</h4>
+                                            <h4 class="subheading">Our Humble Beginnings</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p class="text-muted">It started when we were pondering upon different social media and trying to find out what we could do at a particular location. We were able to combine different posts our friends posted but we weren't sure who we might find and how long we should stay?</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-image">
+                                        <img class="img-circle img-responsive" src="img/about/AB.jpg" alt="">
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4>March 2017</h4>
+                                            <h4 class="subheading">An Agency is Born</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p class="text-muted">We decided that this is a real problem that everyone faces. We have all these tools but there is no way to merge them and find out one simple answer! We created a platform that would combine all your friends + events near you.</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-image">
+                                        <img class="img-circle img-responsive" src="img/about/TP.jpeg" alt="">
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4>April 2017</h4>
+                                            <h4 class="subheading">Transition to Full Service</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p class="text-muted">Different social media are integrated together to create a platform which gives you information about events and people you might know attending. This would help you network, and make you more likely to go outsideto a particular event. It would also give you details about what kind of event it is and how long it will last! </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-image">
+                                        <img class="img-circle img-responsive" src="img/about/FG.jpg" alt="">
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4>May 2017</h4>
+                                            <h4 class="subheading">Coming Soon Phase...</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p class="text-muted">Algorithms would store and detect all the similarities between different places on instagram, and Facebook. Instead of only looking at hashtags, it would also look at pictures. Map all usernames from different social media to point to one specific user</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-image">
+                                        <h4>Be Part
+                                            <br>Of Our
+                                            <br>Story! </h4>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+            <!-- Team Section -->
+            <section id="team" class="bg-light-gray">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2 class="section-heading">Our Amazing Team</h2>
+                            <h3 class="section-subheading text-muted">consists of Rutgers University Students pursing their Masters in Computer Science</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="team-member">
+                                <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
+                                <h4>Saurabh Deochake</h4>
+                                <p class="text-muted">Lead Backend Developer</p>
+                                <ul class="list-inline social-buttons">
+                                    <li><a href="https://www.twitter.com/saurabhd04"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li><a href="https://www.facebook.com/saurabh.deochake"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li><a href="https://www.linkedin.com/in/saurabhdeochake/"><i class="fa fa-linkedin"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="team-member">
+                                <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                                <h4>Risham Chokshi</h4>
+                                <p class="text-muted">Lead Frontend Developer</p>
+                                <ul class="list-inline social-buttons">
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a>
+                                    </li>
+                                    <li><a href="https://www.facebook.com/risham.chokshi"><i class="fa fa-facebook"></i></a>
+                                    </li>
+                                    <li><a href="https://www.linkedin.com/in/rishamchokshi/"><i class="fa fa-linkedin"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2 text-center">
+                            <p class="large text-muted">We have a dedicated team of two graduate computer science students who started their idea at Rutgers University in Computer Networks class. Please feel free to contact us and share your opinion about Evently Friends.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Contact Section -->
+            <section id="contact">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h2 class="section-heading">Contact Us</h2>
+                            <h3 class="section-subheading text-muted">Using multiple different platforms, we provide support 24/7</h3>
+                        </div>
+                    </div>
+
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-phone fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <h4 class="service-heading" style="color: white;">Call</h4>
+                            <p class="text-muted" style="color: #fec503;">You could call us at 1-800-EvntFrd</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <h4 class="service-heading" style="color: white;">Email</h4>
+                            <p class="text-muted" style="color: #fec503;">You could email us at eventlyFriends@gmail.com</p>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-cloud fa-stack-1x fa-inverse"></i>
+                            </span>
+                            <h4 class="service-heading" style="color: white;">Social Media</h4>
+                            <p class="text-muted" style="color: #fec503;">You could message us at eventlyFriends on facebook.com or tweet us at eventlyFriends</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="copyright">Copyright &copy; Evently Friends 2017</span>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="list-inline social-buttons">
+                                <li><a href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <ul class="list-inline quicklinks">
+                                <li><a href="#">Privacy Policy</a>
+                                </li>
+                                <li><a href="#">Terms of Use</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Portfolio Modal 1 -->
+            <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="close-modal" data-dismiss="modal">
+                            <div class="lr">
+                                <div class="rl">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-8 col-lg-offset-2">
+                                    <div class="modal-body">
+                                        <!-- Project Details Go Here -->
+                                        <h2>Your Friends</h2>
+                                        <p class="item-intro text-muted"><strong>Events your friends are attending along with the projected time they will stay!</strong></p>
+                                        <div class="row">
+                                            
+                                            </div>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portfolio Modal 2 -->
+                <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="close-modal" data-dismiss="modal">
+                                <div class="lr">
+                                    <div class="rl">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8 col-lg-offset-2">
+                                        <div class="modal-body">
+                                            <h2>Other Events</h2>
+                                            <p class="item-intro text-muted">Information about different events around you!</p>
+                                            <div class="row">
+                                            </div>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- jQuery -->
+                <script src="vendor/jquery/jquery.min.js"></script>
+
+                <!-- Bootstrap Core JavaScript -->
+                <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+                <!-- Plugin JavaScript -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" integrity="sha384-mE6eXfrb8jxl0rzJDBRanYqgBxtJ6Unn4/1F7q4xRRyIw7Vdg9jP4ycT7x1iVsgb" crossorigin="anonymous"></script>
+
+                <!-- Contact Form JavaScript -->
+                <script src="js/jqBootstrapValidation.js"></script>
+                <script src="js/contact_me.js"></script>
+
+                <!-- Theme JavaScript -->
+                <script src="js/agency.min.js"></script>
+
+                <!-- Search.html events-->
+                <script src="js/events.js"></script>
+            </body>
+
+            </html>
