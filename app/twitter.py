@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 
+###########################################
+# This file only handles Twitter API. Get #
+# the tweets about an event in geo-tagged #
+# tweets.                                 #
+#                                         #
+# Author: Saurabh Deochake                #
+###########################################
+
+
 from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
@@ -10,6 +19,7 @@ import time
 import __future__
 #import logging
 import tweepy
+import facebook_graph as fb 
 
 
 CONFIG_FILE = "/etc/api_config"
@@ -19,21 +29,27 @@ Note: Before you run this script, please get your Consumer Key, Consumer Secret,
 Access Token and Access Secret Keys from https://dev.twitter.com by creating your
 own app
 """
-
+friends = []
 class Twitter_API:
 	# get API instance
 	def get_api(self):
-		return tweepy.API(auth)
+		return tweepy.API(auth)#, wait_on_rate_limit=True)
 
 	# call Twitter API
 	def call_api(self, topic):
 		print "\n\n\n***** WELCOME TO Evently Friends *****"  
 		api = self.get_api()
-		query = raw_input("\n\nEnter the location:")
-		g = geocoder.google(query)
+		#query = raw_input("\n\nEnter the location:")
+		#event = raw_input("\nEnter the event name:")
+		if len(friends) == 0:
+			for friend in tweepy.Cursor(api.friends, count=200).items():
+				friends.append(friend.screen_name)
+			#print friends
+		g = geocoder.google(LOCATION)
 		twitterStream = Stream(auth, Messenger())
 		twitterStream.filter(locations=g.geojson['bbox'])  #Track tweets with location
 			
+
 		
 	def authenticate(self):
 			
@@ -62,11 +78,11 @@ class Messenger(StreamListener):
 			tweet = data.split(',"text":"')[1].split('","source')[0]
 			
 			#Create message in format: @username: <text>
-			fetchedTweet = "@"+userName+"-"+tweet
-			
-			print fetchedTweet
-			time.sleep(5)
-			return True
+			if userName in friends:
+				fetchedTweet = "@"+userName+"-"+tweet
+				print fetchedTweet
+				time.sleep(5)
+				return True
 		
 		except BaseException, e:
 			print 'Failed Ondata,', str(e)
@@ -91,6 +107,10 @@ if __name__ == '__main__':
 	auth.set_access_token(atoken, asecret)
 	
 	print "Successfully authenticated.."
+	#print events
+
 	
 	
-tObj.call_api(None)
+	#tObj.call_api(None)
+
+print fb.pass_events
