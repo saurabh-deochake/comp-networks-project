@@ -28,9 +28,9 @@ import tweepy
 
 
 CONFIG_FILE = "/etc/api_config"
-EVENT_LIMIT = 10000
-ATTENDING_LIMIT = 100000000
-LOCATION = "Rutgers"
+EVENT_LIMIT = 100
+ATTENDING_LIMIT = 2000
+LOCATION = "Pune"
 SELF_ID = "10203154386536494"
 
 class FacebookGraph:
@@ -99,16 +99,20 @@ class FacebookGraph:
 
 	def get_event_attendance(self, event_ids):
 		for id in event_ids:
-			#print id
+			print "Attendance for ", id
 			connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
 			if connections:
 				events_name = []
 				for name in connections["data"]:
 					#print name["name"]
 					events_name.append(name["name"])		
-					events_attending[id] = events_name
+				events_attending[id] = events_name
+			
 
 		return events_attending
+
+# ------------------------------------------------------------------------------------------------------------------------------#
+
 
 class Twitter_API:
 	# get API instance
@@ -117,20 +121,54 @@ class Twitter_API:
 
 	# call Twitter API
 	def call_api(self, topic):
-		print "\n\n\n***** TWITTER  *****"  
-		api = self.get_api()
-		#query = raw_input("\n\nEnter the location:")
-		#event = raw_input("\nEnter the event name:")
-		if len(friends) == 0:
-			for friend in tweepy.Cursor(api.friends, count=200).items():
-				friends.append(friend.screen_name)
-			#print friends
-		for data in pass_events["data"]:
+		try:
+			g = []
+			print "\n\n\n***** TWITTER  *****"  
+			api = self.get_api()
+			#query = raw_input("\n\nEnter the location:")
+			#event = raw_input("\nEnter the event name:")
+			if not len(friends):
+				for friend in tweepy.Cursor(api.friends, count=200).items():
+					friends.append(friend.screen_name)
+				
+		except Exception, e:
+			print "Oops! Something went wrong!"
+			print "Error Trace: ", e
+
+		### DO IT FOR ALL EVENTS ---------------------------------------------------------#
+		### query = event name
+		### geocode = lat lang of event location using geocoder
+		### ------------------------------------------------------------------------------#
+
+		for data in events["data"]:
+
+			query = data["name"]
 			location = data["location"]
-			g = geocoder.google(location)
-			twitterStream = Stream(auth, Messenger())
-			twitterStream.filter(locations=g.geojson['bbox'])  #Track tweets with location
-			wait(5)
+			geo = geocoder.google(location)
+			geocode = geo.latlng
+			max_tweets = 1000
+			searched_tweets = []
+			last_id = -1
+			while len(searched_tweets) < max_tweets:
+				count = max_tweets - len(searched_tweets)
+				try:
+					new_tweets = api.search(q=query, geocode = "%f,%f,%dkm" % (geocode[0], geocode[1], 1),count=count, max_id=str(last_id - 1))
+					if not new_tweets:
+						break
+					searched_tweets.extend(new_tweets)
+					last_id = new_tweets[-1].id
+				except:
+				# depending on TweepError.code, one may want to retry or wait
+				# to keep things simple, we will give up on an error
+					break
+
+			print "friends attending ", query
+			for status in searched_tweets:
+				for name in status.user.screen_name:
+					if name in friends:
+						print name, status.user.profile_image_url_https
+					else:
+						pass
 			
 
 	def authenticate(self):
@@ -147,6 +185,8 @@ class Twitter_API:
 		
 		return ckey,csecret,atoken, asecret
 	
+# ------------------------------------------------------------------------------------------------------------------------------#
+
 
 class Messenger(StreamListener):
 		   
@@ -208,6 +248,8 @@ if __name__ == '__main__':
 	
 	for event in events["data"]:
 		event_ids.append(event["id"])
+
+	print len(event_ids)
 	
 	friends = fb.get_taggable_friends()	
 	
@@ -217,8 +259,11 @@ if __name__ == '__main__':
 	#print events_attending
 	
 	pass_events = fb.find_friends_attending(events_attending, friends)
+	#print events
 	#print pass_events
 
+	#print fb_call.get_object(str(633974340060605))
+	#print fb_call.get_connections(341262269579563,"attending")                      
 	#---------------- TWITTER STARTS ---------------------------------------------
 
 	tObj = Twitter_API()
