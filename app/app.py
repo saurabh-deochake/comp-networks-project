@@ -15,14 +15,14 @@ events = [
 	{
 		'title': 'Barbeque',
 		'description': 'It is a Barbeque at this place', 
-		'Time': '2:00pm',
-		'Duration': '3Hr',
-		'Address': '255 hamilton street, new brunswick, nj'
+		'started': 'Saturday, May 31 12:00PM',
+		'duration': '3Hr',
+		'address': '255 hamilton street, new brunswick, nj'
 	},
 	{
 		'title': 'Barbeque',
 		'description': 'It is a Barbeque at this place', 
-		'started': '2:00pm',
+		'started': 'Saturday, May 31 12:00PM',
 		'duration': '3Hr',
 		'address': '255 hamilton street, new brunswick, nj'
 	}
@@ -96,7 +96,6 @@ def get_heatmap():
 
 #will give you credentials for the user
 @app.route('/login', methods=['GET', 'OPTIONS'])
-#@crossdomain(origin='*')
 def post_login():
 	TuserId = request.args.get('TuserId')
 	FuserId = request.args.get('FuserId')
