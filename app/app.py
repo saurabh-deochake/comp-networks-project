@@ -1,24 +1,11 @@
 #!/usr/bin/env python
 #!/Library/Python/2.7/site-packages flask
 import os
-from flask import Flask, jsonify, request, redirect, send_from_directory, render_template
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
-
-@app.route('/')
-def index():
-	return render_template('index.html')
-
-@app.route('/css/style.css')
-def cssStyle():
-	return render_template('/css/style.css')
-
-@app.route('/js/index.js')
-def jsIndex():
-	return render_template('/js/index.js')
-
 
 location = None
 
@@ -41,6 +28,30 @@ events = [
 	}
 ]
 
+heatmap = {
+	'Events': [{
+		'name': 'Barbeque',
+		'Posts': 100
+	},
+	{
+		'name': 'Barbeque',
+		'Posts': 20
+	},
+	{
+		'name': 'Barbeque',
+		'Posts': 25
+	},
+	{
+		'name': 'Barbeque',
+		'Posts': 100
+	},
+	{
+		'name': 'Barbeque',
+		'Posts': 75
+	}],
+	'max': 100
+}
+
 
 #get list of events using FB api
 @app.route('/event_list', methods=['GET'])
@@ -53,9 +64,13 @@ def get_events():
 #get list of friends still at a particular event, name will be given
 @app.route('/friend_list', methods=['GET'])
 def get_tasks():
-	event = request.args.get('event')
-	return jsonify({'events': events}) 
+	return jsonify({'friends': events}) 
 	#replace with the list received
+
+#heat map based on an event passing event and popularity
+@app.route('/heatmap', methods=['GET'])
+def get_heatmap():
+	return jsonify(heatmap) 
 
 #will give you credentials for the user
 @app.route('/login', methods=['GET', 'OPTIONS'])
