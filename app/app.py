@@ -17,15 +17,37 @@ events = [
 		'description': 'It is a Barbeque at this place', 
 		'Time': '2:00pm',
 		'Duration': '3Hr',
-		'Posts': 100
+		'Address': '255 hamilton street, new brunswick, nj'
 	},
 	{
 		'title': 'Barbeque',
 		'description': 'It is a Barbeque at this place', 
-		'Time': '2:00pm',
-		'Duration': '3Hr',
-		'Posts': 100
+		'started': '2:00pm',
+		'duration': '3Hr',
+		'address': '255 hamilton street, new brunswick, nj'
 	}
+]
+
+friends = [
+	{
+		'name':'Risham Chokshi',
+		'event_name': 'Barbeque',
+		'event_started': '2:00pm',
+		'event_ending': '3Hr',
+		'event_address': '255 hamilton street, new brunswick, nj',
+		'person_leaving': '3Hr',
+		'person_picture': 'http//www.google.com'
+	},
+	{
+		'name':'Saurabh Deochake',
+		'event_name': 'Barbeque',
+		'event_started': '2:00pm',
+		'event_ending': '3Hr',
+		'event_address': '255 hamilton street, new brunswick, nj',
+		'person_leaving': '3Hr',
+		'person_picture': 'http//www.google.com'
+	}
+
 ]
 
 heatmap = {
@@ -64,7 +86,7 @@ def get_events():
 #get list of friends still at a particular event, name will be given
 @app.route('/friend_list', methods=['GET'])
 def get_tasks():
-	return jsonify({'friends': events}) 
+	return jsonify({'friends': friends}) 
 	#replace with the list received
 
 #heat map based on an event passing event and popularity
