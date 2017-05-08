@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 ###########################################
-# This file only handles Facebook Graph   #
+# This file handles Twitter and Facebook  #
 # API.                                    #
 #                                         #
 # Author: Saurabh Deochake                #
@@ -19,6 +19,7 @@ from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from sys import version_info
+
 import geocoder
 #from ConfigParser import SafeConfigParser
 import time
@@ -63,7 +64,8 @@ class FacebookGraph:
 		return json.dumps(events)
 	
 	def find_friends_attending(self, events_attending, friends):
-		
+		api = {}
+		#friendslist = []
 		#print events_attending
 		for key in events_attending:
 			#print key
@@ -86,10 +88,15 @@ class FacebookGraph:
 						d = {"name":obj["name"], "description": obj["description"],"start_time": obj["start_time"], "end_time":obj["end_time"], "location":obj["place"]["name"]}
 						pass_events_names.append(d)
 					print name + " Picture: "+friends[name]+"\n\n"
+					
+					api = {"name":name, "event_name": obj["name"], "event_started":str(starttime), "event_ending":str(endtime), "event_address":obj["place"]["name"], "person_leaving":str(endtime), "person_picture":friends[name]}
+					friendslist.append(api)	
 					#else:
 					#	print "None!"
 		pass_events = {"data": pass_events_names}
-		return pass_events
+		#friends_api = {"data":friendslist}
+		#print friendslist
+		return pass_events, friendslist
 
 	def get_taggable_friends(self):
 		taggable = fb_call.get_connections(SELF_ID,"taggable_friends",limit=ATTENDING_LIMIT)
@@ -111,6 +118,33 @@ class FacebookGraph:
 
 		return events_attending
 
+	def create_events_api(self, events_id):
+		event = {}
+		events = []
+		for id in event_ids:
+			obj = fb_call.get_object(id)
+			starttime = datetime.datetime.strptime(obj["start_time"][:-5],'%Y-%m-%dT%H:%M:%S')
+			endtime = datetime.datetime.strptime(obj["end_time"][:-5],'%Y-%m-%dT%H:%M:%S')
+
+			event = {"title":obj["name"], "description":obj["description"], "start_time":str(starttime), "end_time": str(endtime), "address": obj["name"]}
+			events.append(event)
+
+		events_api = {"data": events}
+		return events_api
+
+	def create_events_heatmap(self, events_attending):
+		hm = {}
+		heatmap = []
+		for id in events_attending:
+			obj = fb_call.get_object(id)
+
+			#count = fb_call.get_connections(id, limit=ATTENDING_LIMIT, fields=[attending_count])
+			count = len(events_attending[id])
+			hm[obj["name"]] = count
+			heatmap.append(hm)
+
+		heatmap_api = {"events":heatmap}
+		return heatmap_api
 # ------------------------------------------------------------------------------------------------------------------------------#
 
 
@@ -120,9 +154,10 @@ class Twitter_API:
 		return tweepy.API(auth)#, wait_on_rate_limit=True)
 
 	# call Twitter API
-	def call_api(self, topic):
+	def call_api(self, friendslist):
 		try:
 			g = []
+			api = {}
 			print "\n\n\n***** TWITTER  *****"  
 			api = self.get_api()
 			#query = raw_input("\n\nEnter the location:")
@@ -149,6 +184,9 @@ class Twitter_API:
 			max_tweets = 1000
 			searched_tweets = []
 			last_id = -1
+			obj = fb_call.get_object(data["id"])
+			starttime = datetime.datetime.strptime(obj["start_time"][:-5],'%Y-%m-%dT%H:%M:%S')
+			endtime = datetime.datetime.strptime(obj["end_time"][:-5],'%Y-%m-%dT%H:%M:%S')
 			while len(searched_tweets) < max_tweets:
 				count = max_tweets - len(searched_tweets)
 				try:
@@ -167,8 +205,12 @@ class Twitter_API:
 				for name in status.user.screen_name:
 					if name in friends:
 						print name, status.user.profile_image_url_https
+						api = {"name":name, "event_name": obj["name"], "event_started":str(starttime), "event_ending":str(endtime), "event_address":obj["place"]["name"], "person_leaving":str(endtime), "person_picture":friends[name]}
+						friendslist.append(api)
 					else:
 						pass
+		friends_api = {"data":friendslist}
+		return friends_api
 			
 
 	def authenticate(self):
@@ -239,6 +281,8 @@ if __name__ == '__main__':
 	events_name = []
 	events_info = []
 	friends = {}
+	friends_api = {}
+	friendslist = []
 	data =fb_call.request("search",{ 'q' : LOCATION, 'type' : 'event', 'limit':EVENT_LIMIT, 'since_date'  :   currentTime}) #'limit' ,before since_date
 	
 	# fb.get_data already returns us output in json format
@@ -249,7 +293,7 @@ if __name__ == '__main__':
 	for event in events["data"]:
 		event_ids.append(event["id"])
 
-	print len(event_ids)
+	#print events["data"][0]
 	
 	friends = fb.get_taggable_friends()	
 	
@@ -258,12 +302,19 @@ if __name__ == '__main__':
 	events_attending = fb.get_event_attendance(event_ids)
 	#print events_attending
 	
-	pass_events = fb.find_friends_attending(events_attending, friends)
-	#print events
-	#print pass_events
+	pass_events, friends_api= fb.find_friends_attending(events_attending, friends)
 
-	#print fb_call.get_object(str(633974340060605))
-	#print fb_call.get_connections(341262269579563,"attending")                      
+	print friends_api
+
+	## --------------------- EVENTS API -------------------------------------
+	
+	events_api = fb.create_events_api(event_ids)
+	print "\n\n\n\n"
+	print json.dumps(events_api)
+
+	## --------------------- HEATMAP API -------------------------------------
+	print fb.create_events_heatmap(events_attending)
+
 	#---------------- TWITTER STARTS ---------------------------------------------
 
 	tObj = Twitter_API()
@@ -278,7 +329,8 @@ if __name__ == '__main__':
 
 	
 	
-	tObj.call_api(None)
+	friends_api = tObj.call_api(friendslist)
+	print friends_api
 
 	#print pass_events
 				
