@@ -139,6 +139,8 @@ class FacebookGraph:
 		return datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
 	def get_event_json(self, info):
+		d = {}
+		events={}
 		for i in info["data"]:
 			if "end_time" in i and "place" in i and "name" in i["place"] and "start_time" in i and "description" in i:
 				d = {"id": i["id"], "name": i["name"], "description": i["description"],"start_time": i["start_time"], "end_time":i["end_time"], 
@@ -152,7 +154,7 @@ class FacebookGraph:
 	
 	def find_friends_attending(self, events_attending, friends):
 		api = {}
-		#friendslist = []
+		friendslist = []
 		#print events_attending
 		for key in events_attending:
 			#print key
@@ -187,11 +189,13 @@ class FacebookGraph:
 
 	def get_taggable_friends(self):
 		taggable = fb_call.get_connections(SELF_ID,"taggable_friends",limit=ATTENDING_LIMIT)
+		print taggable
 		for dictionary in taggable["data"]:
 			friends[dictionary["name"]] = dictionary["picture"]["data"]["url"]
 		return friends
 
 	def get_event_attendance(self, event_ids):
+		#events_attending = []
 		for id in event_ids:
 			print "Attendance for ", id
 			connections = fb_call.get_connections(id, "attending",limit=ATTENDING_LIMIT,fields=[])
@@ -208,12 +212,13 @@ class FacebookGraph:
 	def create_events_api(self, events_id):
 		event = {}
 		events = []
+		events_api = {}
 		for id in event_ids:
 			obj = fb_call.get_object(id)
 			starttime = datetime.datetime.strptime(obj["start_time"][:-5],'%Y-%m-%dT%H:%M:%S')
 			endtime = datetime.datetime.strptime(obj["end_time"][:-5],'%Y-%m-%dT%H:%M:%S')
 
-			event = {"title":obj["name"], "description":obj["description"], "start_time":str(starttime), "end_time": str(endtime), "address": obj["name"]}
+			event = {"title":obj["name"], "description":obj["description"], "start_time":str(starttime), "end_time": str(endtime), "address": obj["place"]["name"]}
 			events.append(event)
 
 		events_api = {"events": events}
@@ -222,6 +227,7 @@ class FacebookGraph:
 	def create_events_heatmap(self, events_attending):
 		hm = {}
 		heatmap = []
+		heatmap_api={}
 		for id in events_attending:
 			obj = fb_call.get_object(id)
 
@@ -232,7 +238,7 @@ class FacebookGraph:
 			#hm[obj["name"]] = count
 			heatmap.append(hm)
 		#print max(heatmap)
-		heatmap_api = {"events":heatmap, "max":ATTENDING_LIMIT}
+		heatmap_api = {"Events":heatmap, "max":ATTENDING_LIMIT}
 		return heatmap_api
 # ------------------------------------------------------------------------------------------------------------------------------#
 
